@@ -1,8 +1,8 @@
 import { IPages } from "@libreforge/libreforge-framework-shared";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import React from "react";
-import { useSelector } from "react-redux";
-import { InversifyContainerProviderContext, getSharedState, useDispatch } from "@libreforge/libreforge-framework";
+import { useDispatch, useSelector } from "react-redux";
+import { InversifyContainerProviderContext, getSharedState } from "@libreforge/libreforge-framework";
 import ChildComponentRenderer from "@libreforge/libreforge-framework/dist/components/ChildComponentRenderer";
 
 const PAGE_NAME_NOT_FOUND = "not_found";
@@ -16,7 +16,7 @@ type ApplicationPageProps = {
 
 const ApplicationPage = (props: ApplicationPageProps) => {
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { pageName } = useParams()
   // const targetPageName = !!overridePageName ? overridePageName: (pageName || PAGE_NAME_NOT_FOUND);
   const targetPageName = !!props.overridePageName ? props.overridePageName: "home";

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm i --force
+npm i --legacy-peer-deps
