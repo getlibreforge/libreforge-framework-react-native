@@ -28,7 +28,7 @@ const ButtonComponent = forwardRef((props: { componentId: string, pages: IPages,
   let targetProps: any = props;
 
   const actionGroup = props.pageComponents[props.componentId].actionGroup;
-  targetProps = useActionHandlers(targetProps, actionGroup);  
+  targetProps = useActionHandlers(targetProps, actionGroup, undefined, undefined);  
   targetProps = usePropsOverrideByComponentRef(props.componentId, targetProps, props.designMode);
 
   // if (targetProps.leftIcon) {
@@ -53,7 +53,7 @@ const ButtonComponent = forwardRef((props: { componentId: string, pages: IPages,
   // return <Button ref={ref} {...elementProps} />;
 
   return (
-    <TouchableOpacity style={styles.button} onPress={() => {}}>
+    <TouchableOpacity style={styles.button} onPress={() => targetProps.onClick(undefined)}>
       <Text style={styles.text}>Test Button</Text>
     </TouchableOpacity>
   );      
