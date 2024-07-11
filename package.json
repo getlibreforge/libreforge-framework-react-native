@@ -1,6 +1,6 @@
 {
   "name": "@libreforge/libreforge-framework-react-native",
-  "version": "1.0.13",
+  "version": "1.0.21",
   "description": "``` npm login npm whoami",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

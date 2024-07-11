@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
 import { IPages } from "@libreforge/libreforge-framework-shared"
-import { Routes } from './routes';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ApplicationPage from './ApplicationPage';
@@ -19,12 +18,14 @@ export const Application = (props: ApplicationProps) => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="home">
-        <Stack.Screen name="home" >
-          {(props) => <ApplicationPage {...props} pages={pages} overridePageName={'home'} wrapperComponent={wrapperComponent} wrapperContainer={wrapperContainer} />}
-        </Stack.Screen>
-
-        {/* <Routes stack={Stack} pages={pages} wrapperComponent={wrapperComponent} wrapperContainer={wrapperContainer} /> */}
+      <Stack.Navigator initialRouteName="home" screenOptions={{ headerShown: false }}>
+        {
+          Object.keys(pages).map(key => {
+            return <Stack.Screen key={key} name={key} >
+                    {(props) => <ApplicationPage {...props} pages={pages} overridePageName={key} wrapperComponent={wrapperComponent} wrapperContainer={wrapperContainer} />}
+                  </Stack.Screen>
+          })
+        }
       </Stack.Navigator>
     </NavigationContainer>
   );
