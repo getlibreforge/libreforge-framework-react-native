@@ -1,6 +1,6 @@
 {
   "name": "@libreforge/libreforge-framework-react-native",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "``` npm login npm whoami",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/getlibreforge/libreforge-framework-react-native#readme",
   "dependencies": {
-    "@libreforge/libreforge-framework": "^1.0.95",
+    "@libreforge/libreforge-framework": "^1.0.97",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.10.0",
     "@rematch/core": "^2.2.0",
