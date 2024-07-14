@@ -1,8 +1,9 @@
-import { ReactElement } from 'react';
+import { ReactElement, useContext, useState } from 'react';
 import { IPages } from "@libreforge/libreforge-framework-shared"
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ApplicationPage from './ApplicationPage';
+import { NavigationCurrentPageProviderContext } from '@libreforge/libreforge-framework';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,13 +17,22 @@ type ApplicationProps = {
 export const Application = (props: ApplicationProps) => {
   const { pages, wrapperComponent, wrapperContainer } = props;
 
+  const { setCurrentRoute } = useContext(NavigationCurrentPageProviderContext);
+  const navigationRef = createNavigationContainerRef();
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={ navigationRef }
+      onReady={() => {}}
+      onStateChange={() => {
+        setCurrentRoute(navigationRef.getCurrentRoute()?.name)
+      }}
+    >
       <Stack.Navigator initialRouteName="home" screenOptions={{ headerShown: false }}>
         {
           Object.keys(pages).map(key => {
             return <Stack.Screen key={key} name={key} >
-                    {(props) => <ApplicationPage {...props} pages={pages} overridePageName={key} wrapperComponent={wrapperComponent} wrapperContainer={wrapperContainer} />}
+                    {(props) => <ApplicationPage {...props} pageName={key} pages={pages} 
+                      wrapperComponent={wrapperComponent} wrapperContainer={wrapperContainer} />}
                   </Stack.Screen>
           })
         }
