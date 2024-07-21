@@ -3,6 +3,7 @@ import { IComponents, IPages } from '@libreforge/libreforge-framework-shared';
 import { cleanupCustomComponentProps, useActionHandlers, usePropsOverrideByComponentRef } from '@libreforge/libreforge-framework';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import { Snackbar } from '../../utils/snackbar';
 
 const getStyles = (props: any) => StyleSheet.create({
   button: {
@@ -32,7 +33,7 @@ const ButtonComponent = forwardRef((props: { componentId: string, pages: IPages,
   let targetProps: any = props;
 
   const actionGroup = props.pageComponents[props.componentId].actionGroup;
-  targetProps = useActionHandlers(targetProps, actionGroup, navigation, undefined);  
+  targetProps = useActionHandlers(targetProps, actionGroup, navigation, new Snackbar());  
   targetProps = usePropsOverrideByComponentRef(props.componentId, targetProps, props.designMode);
 
   // if (targetProps.leftIcon) {

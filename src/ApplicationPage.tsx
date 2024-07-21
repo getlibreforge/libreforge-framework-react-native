@@ -17,7 +17,6 @@ type ApplicationPageProps = {
 const ApplicationPage = (props: ApplicationPageProps) => {
 
   const { currentRoute } = useContext(NavigationCurrentPageProviderContext);
-  console.warn(`Current page/route is ${currentRoute}`);
 
   const dispatch = useDispatch();
   // const { pageName } = useParams()
