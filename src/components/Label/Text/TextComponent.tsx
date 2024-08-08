@@ -1,31 +1,20 @@
 import { forwardRef } from 'react';
 import { IComponents, IPages } from '@libreforge/libreforge-framework-shared';
 import { cleanupCustomComponentProps, useActionHandlers, usePropsOverrideByComponentRef } from '@libreforge/libreforge-framework';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { Snackbar } from '../../utils/snackbar';
 
 const getStyles = (props: any) => StyleSheet.create({
-  button: {
-    alignItems: props.alignItems || 'center',
-    justifyContent: props.justifyContent || 'center',
-    paddingVertical: props.paddingVertical || 8,
-    paddingHorizontal: props.paddingHorizontal || 24,
-    borderRadius: props.borderRadius || 4,
-    elevation: props.elevation || 3,
-    backgroundColor: props.backgroundColor || 'black',
-    ...cleanupCustomComponentProps(props, { key: 'key' })
-  },
   text: {
     fontSize: props.fontSize || 14,
     lineHeight: props.lineHeight || 21,
     fontWeight: props.fontWeight || 'bold',
     letterSpacing: props.letterSpacing || 0.25,
-    color: props.color || 'white'
+    color: props.color || 'white',
   },
 });
 
-const ButtonComponent = forwardRef((props: { componentId: string, pages: IPages, designMode: boolean, 
+const TextComponent = forwardRef((props: { componentId: string, pages: IPages, designMode: boolean, 
     pageComponents: IComponents, componentPage: string, collectionRefIdx: number | undefined, children: string | undefined }, ref) => {
 
   const navigation = useNavigation();
@@ -34,7 +23,7 @@ const ButtonComponent = forwardRef((props: { componentId: string, pages: IPages,
   let targetProps: any = props;
 
   const actionGroup = props.pageComponents[props.componentId].actionGroup;
-  targetProps = useActionHandlers(targetProps, actionGroup, navigation, new Snackbar());  
+  targetProps = useActionHandlers(targetProps, actionGroup, navigation, undefined);  
   targetProps = usePropsOverrideByComponentRef(props.componentId, targetProps, props.designMode);
 
   // if (targetProps.leftIcon) {
@@ -59,10 +48,10 @@ const ButtonComponent = forwardRef((props: { componentId: string, pages: IPages,
   // return <Button ref={ref} {...elementProps} />;
 
   return (
-    <TouchableOpacity style={styles.button} onPress={() => targetProps.onClick(undefined)}>
-      <Text style={styles.text}>{props.children || ''}</Text>
-    </TouchableOpacity>
+    <Text style={styles.text} onPress={() => targetProps.onClick(undefined)}>
+      {props.children || ''}
+    </Text>
   );      
 });
 
-export default ButtonComponent;
+export default TextComponent;
