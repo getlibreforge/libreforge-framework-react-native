@@ -1,22 +1,21 @@
-import { forwardRef } from 'react';
+import { forwardRef, useContext } from 'react';
 import { IComponents, IPages } from '@libreforge/libreforge-framework-shared';
-import { cleanupCustomComponentProps, useActionHandlers, usePropsOverrideByComponentRef } from '@libreforge/libreforge-framework';
-import {Text, StyleSheet} from 'react-native';
+import { InversifyContainerProviderContext, cleanupCustomComponentProps, useActionHandlers, usePropsOverrideByComponentRef } from '@libreforge/libreforge-framework';
+import {Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import { LocalImageManager, SYMBOL_LOCAL_IMAGE_MANAGER } from '../../service';
 
 const getStyles = (props: any) => StyleSheet.create({
-  text: {
-    fontSize: props.fontSize || 14,
-    // lineHeight: props.lineHeight || 21,
-    // fontWeight: props.fontWeight || 'bold',
-    letterSpacing: props.letterSpacing || 0.25,
-    color: props.color || 'white',
-    ...cleanupCustomComponentProps(props, { key: 'key' })
+  image: {
+    ...cleanupCustomComponentProps(props, { key: 'key', 'src': 'src' })
   },
 });
 
-const TextComponent = forwardRef((props: { componentId: string, pages: IPages, designMode: boolean, 
+const ImageComponent = forwardRef((props: { componentId: string, pages: IPages, designMode: boolean, 
     pageComponents: IComponents, componentPage: string, collectionRefIdx: number | undefined, children: string | undefined }, ref) => {
+
+  const container = useContext(InversifyContainerProviderContext);
+  const localImageManager = container.get<LocalImageManager>(SYMBOL_LOCAL_IMAGE_MANAGER);
 
   const navigation = useNavigation();
   const styles = getStyles(props);
@@ -48,11 +47,13 @@ const TextComponent = forwardRef((props: { componentId: string, pages: IPages, d
   // const elementProps = cleanupCustomComponentProps(targetProps)
   // return <Button ref={ref} {...elementProps} />;
 
+  const source = targetProps['src'];
+
   return (
-    <Text style={styles.text} onPress={() => targetProps.onClick(undefined)}>
-      {props.children || ''}
-    </Text>
+    <TouchableOpacity onPress={() => targetProps.onClick(undefined)}>
+      <Image style={styles.image} source={ localImageManager.getImageSource(source) }/>
+    </TouchableOpacity>
   );      
 });
 
-export default TextComponent;
+export default ImageComponent;
